@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Furniture Landing Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/src/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+
+    <body>
+        <header>
+            <nav id="sideNav">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Me</a></li>
+                    <li><a href="#">Service</a></li>
+                    <li><a href="#"> Testimonial</a></li>
+                    <li><a href="#">Contact Me</a></li>
+                </ul>
+            </nav>
+            <i id="menuBtn" class="fa fa-bars"></i>
+            <div></div>
+
+            <div class="logo">
+                <img src="/src/image/EIN.png" alt="">
+            </div>
+
+            <div class="account flex">
+                <div class="input">
+                    <a href="@ein_punk">
+                        <button>CONTACT ME </button> 
+                    </a>
+                    <!-- <i class="fa fa-search"></i> -->
+                </div>
+                
+            </div>
+        </header>
+
+        <script>
+            var menuBtn = document.getElementById('menuBtn');
+            var sideNav = document.getElementById('sideNav');
+
+            sideNav.style.left = "-250px";
+            menuBtn.onclick = function() {
+                if (sideNav.style.left == "-250px") {
+                    sideNav.style.left = "0";
+                } else {
+                    sideNav.style.left = "-250px"
+                }
+            }
+        </script>
+
+        <section>
+            <div class="content flex">
+                <div class="left">
+                    <div class="para">
+                        <h3> Blockchain Developer</h3>
+                        <h2> Einpunk <br>Protocol</span></h2>
+                        <p> Developer Advocate on the Einpunk Protocol.Efficient professional with 2years of experience and a proven knowledge of regulatory compliance, research and development and work methods analysis. Aiming to leverage my abilities to successfully fil the Smart Contract Developer role at your company.</p>
+                        <a href="https://github.com/einsteinpunk">
+                            <button>DISCOVER MORE</button> 
+                        </a>
+                     
+                    </div>
+                </div>
+
+                <div class="right flex1">
+                    <div class="img">
+                        <img src="/src/image/EIN.png "class="slide">
+                    </div>
+                    <div class="thumb">
+                        <img src="/src/image/logo.jpg" onclick="img('image/h4.jpg')">
+                        <img src="/src/image/logo.jpg" onclick="img('image/h2.jpg')">
+                        <img src="/src/image/logo.jpg" onclick="img('image/h3.jpg')">
+                        <ul class="social">
+                            <i class="fa fa-facebook"></i>
+                            <i class="fa fa-twitter"></i>
+                            <i class="fa fa-youtube"></i>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script type="text/javascript">
+            function img(anything) {
+                document.querySelector('.slide').src = anything;
+            }
+        </script>
+
+
+    </body>
+
+</html>

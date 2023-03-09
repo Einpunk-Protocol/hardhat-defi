@@ -1,0 +1,41 @@
+#!/bin/sh
+
+mvprog="${MVPROG-mv}"
+chmodprog="${CHMODPROG-chmod}"
+sedprog="${SEDPROG-sed}"
+emacsprog="${PVSEMACS-emacs}"
+
+# Relocate PVSPATH and in the pvs shell script.
+
+echo Setting PVSPATH in the \"pvs\", \"pvsio\", \"proveit\", and \"provethem\"
+echo "  shell scripts to $PWD"
+echo If this is not the right path, edit the scripts before using them.
+$chmodprog u+w pvs pvsio proveit provethem
+$sedprog -e "s,^PVSPATH=.*$,PVSPATH=$PWD," < pvs > tmp.$$
+$mvprog tmp.$$ pvs
+$sedprog -e "s,^PVSPATH=.*$,PVSPATH=$PWD," < pvsio > tmp.$$
+$mvprog tmp.$$ pvsio
+$sedprog -e "s,^PVSPATH=.*$,PVSPATH=$PWD," < proveit > tmp.$$
+$mvprog tmp.$$ proveit
+$sedprog -e "s,^\$PVSPATH=.*$,\$PVSPATH=\"$PWD\";," < provethem > tmp.$$
+$mvprog tmp.$$ provethem
+$chmodprog a+x pvs pvsio proveit provethem
+
+# Take care of Catalina quarantine issues
+if [ `uname -s` = "Darwin" ]; then
+  echo "\nCalling xattr to remove MacOSX quarantine attributes on files"
+  xattr -r -d com.apple.quarantine . 2> /dev/null
+fi
+
+# Byte compile emacs
+
+emacsinfo="`which $emacsprog`: `$emacsprog --version | head -n 1`"
+echo "\nByte compiling emacs files using $emacsinfo"
+echo "  if this is not the right Emacs, set PVSEMACS"
+echo "  otherwise the byte compiled files will cause an error"
+echo "see byte-compile.log for details (mostly warnings)"
+echo "Byte compilation currently generates lots of warnings" > byte-compile.log
+echo "  (because of compatibility issues with older Emacs versions)\n" >> byte-compile.log
+(cd emacs; $emacsprog -batch -l pvs-byte-compile.el) \
+    >> byte-compile.log 2>&1 \
+    || echo "!!! Something went wrong - see the end of byte-compile.log"
